@@ -41,6 +41,14 @@
                         <td class="fw-normal"><span class="fs-4 ">Current focused element (any keypressed)</span> </td>
                         <td><button class="btn btn-primary" id="current-focused-any-key">Copy</button></td>
                     </tr>
+                    <tr class="p-5 bg-light">
+                        <td class="fw-normal"><span class="fs-4 " style="color:#aaa">Increase font size</span> </td>
+                        <td><button class="btn btn-primary" id="increase-font-size">Copy</button></td>
+                    </tr>
+                    <tr class="p-5 bg-light">
+                        <td class="fw-normal"><span class="fs-4 " style="color:#aaa">Text spacing</span> </td>
+                        <td><button class="btn btn-primary" id="text-spacing">Copy</button></td>
+                    </tr>
                 </table>
             </div>
             <div class="col-4"></div>
@@ -146,7 +154,7 @@ document.addEventListener("contextmenu", (event) => {
         })
 
         document.querySelector("#current-focused-any-key").addEventListener("click", () => {
-            navigator.clipboard.writeText(`// This scripts Logs in console which element has 
+            navigator.clipboard.writeText(`// This scripts Logs in console which element has teh focus when pressing any key 
 
 document.addEventListener("keydown", (event) => {
             setTimeout(() => {
@@ -159,6 +167,40 @@ document.addEventListener("keydown", (event) => {
             console.log("Copied!!!")
             displayAlert()
         })
+
+        document.querySelector("#increase-font-size").addEventListener("click", () => {
+
+            navigator.clipboard.writeText(`// This scripts increase the fontsize of the right-clicked element
+
+document.addEventListener("contextmenu", (event) => {
+    const targetElement = event.target
+    const bg = targetElement.style.background
+    targetElement.style.backgroundColor = "red"
+    console.log(targetElement)
+    targetElement.style.fontSize = "35px"
+    setTimeout(() => { targetElement.style.background = bg }, 400)
+
+})
+
+`)
+            console.log("Copied!!!")
+            displayAlert()
+        })
+               
+        document.querySelector("#text-spacing").addEventListener("click", () => {
+        navigator.clipboard.writeText(`
+            document.querySelectorAll("*").forEach((el)=>{
+                el.style.setProperty('word-spacing','0.16em','important')
+                el.style.setProperty('line-height','1.5','important')
+                el.style.setProperty('letter-spacing','0.12em','important')
+            
+            })
+        `)
+
+        console.log("Copied!!!")
+        displayAlert()
+        })
+
 
     </script>
 </body>
