@@ -33,9 +33,9 @@
                         <td class="fw-normal"><span class="fs-4 ">Color Contrast CSS props Script</span> </td>
                         <td><button class="btn btn-primary" id="color-contrast-css-props">Copy</button></td>
                     </tr>
-                    <tr class="p-5 bg-light">
+                    <tr class="p-5">
                         <td class="fw-normal"><span class="fs-4 " style="color:#aaa">Show Heading levels</span> </td>
-                        <td><button class="btn btn-primary" id="show-heading-levels" disabled>Copy</button></td>
+                        <td><button class="btn btn-primary" id="show-heading-levels" >Copy</button></td>
                     </tr>
                     <tr class="p-5">
                         <td class="fw-normal"><span class="fs-4 ">Current focused element (any keypressed)</span> </td>
@@ -148,7 +148,18 @@ document.addEventListener("contextmenu", (event) => {
         })
 
         document.querySelector("#show-heading-levels").addEventListener("click", () => {
-            navigator.clipboard.writeText(``)
+            navigator.clipboard.writeText(`		// ARIA Headings pending to include
+		const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6")
+		let spanLevel = null
+
+		headings.forEach(h=>{
+			spanLevel = document.createElement("span")
+			spanLevel.innerText = h.tagName
+			spanLevel.style.background = "red"
+			spanLevel.style.display = "inline"
+			h.insertAdjacentElement("afterbegin",spanLevel)
+			h.style.outline = "red thin solid"
+		})`)
             console.log("Copied!!!")
             displayAlert()
         })
