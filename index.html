@@ -19,58 +19,62 @@
     </div>
 
     <main class="container" style="z-index: 1;">
-        <h1 class="mt-3 text-center">Script picker</h1>
+        <h1 class="mt-3 mb-5 text-center">Script picker</h1>
 
         <div class="row">
-            <div class="col-3"></div>
-            <div class="col-5 w-50 pt-3">
-                <table class="table table-hover border">
-                    <tr class="p-5">
-                        <td class="fw-normal"><span class="fs-4 ">BBVA script</span> </td>
-                        <td><button class="btn btn-primary" id="bbva">Copy</button></td>
+            
+            <div class="col-5 pt-3">
+                <h3>Others</h3> 
+                <table class="table table-hover border table-striped ">
+                    <tr class="p-2">
+                        <td class="fw-normal"><span class="fs-6 ">BBVA script</span> </td>
+                        <td><button class="btn btn-sm btn-primary" id="bbva">Copy</button></td>
                     </tr>
                     <tr class="p-5">
-                        <td class="fw-normal"><span class="fs-4 ">Color Contrast CSS props Script</span> </td>
-                        <td><button class="btn btn-primary" id="color-contrast-css-props">Copy</button></td>
+                        <td class="fw-normal"><span class="fs-6 ">Color Contrast CSS props Script</span> </td>
+                        <td><button class="btn btn-sm btn-primary" id="color-contrast-css-props">Copy</button></td>
                     </tr>
                     <tr class="p-5">
-                        <td class="fw-normal"><span class="fs-4 ">Show Heading levels</span> </td>
-                        <td><button class="btn btn-primary" id="show-heading-levels" >Copy</button></td>
+                        <td class="fw-normal"><span class="fs-6 ">Current focused element (any keypressed)</span> </td>
+                        <td><button class="btn btn-sm btn-primary" id="current-focused-any-key">Copy</button></td>
                     </tr>
                     <tr class="p-5">
-                        <td class="fw-normal"><span class="fs-4 ">Current focused element (any keypressed)</span> </td>
-                        <td><button class="btn btn-primary" id="current-focused-any-key">Copy</button></td>
+                        <td class="fw-normal"><span class="fs-6 ">Increase font size</span> </td>
+                        <td><button class="btn btn-sm btn-primary" id="increase-font-size">Copy</button></td>
                     </tr>
                     <tr class="p-5">
-                        <td class="fw-normal"><span class="fs-4 ">Increase font size</span> </td>
-                        <td><button class="btn btn-primary" id="increase-font-size">Copy</button></td>
-                    </tr>
-                    <tr class="p-5">
-                        <td class="fw-normal"><span class="fs-4 ">Text spacing</span> </td>
-                        <td><button class="btn btn-primary" id="text-spacing">Copy</button></td>
+                        <td class="fw-normal"><span class="fs-6 ">Text spacing</span> </td>
+                        <td><button class="btn btn-sm btn-primary" id="text-spacing">Copy</button></td>
                     </tr>
                 </table>
             </div>
-            <div class="col-4"></div>
+            <div class="col-5 pt-3">
+                <h3>DOM Elements</h3>
+                <table class="table table-hover border table-striped">
+                     <tr class="p-2">
+                        <td class="fw-normal"><span class="fs-6">Show Heading levels</span></td>
+                        <td><button class="btn btn-sm btn-primary" id="show-heading-levels" >Copy</button></td>
+                    </tr>
+                    <tr class="p-2">
+                        <td class="fw-normal"><span class="fs-6">Show List and Listitems</span> </td>
+                        <td><button class="btn btn-sm btn-primary" id="show-list" >Copy</button></td>
+                    </tr>
+                    <tr class="p-2">
+                        <td class="fw-normal"><span class="fs-6">Markers for HTML elements (tag name)</span> </td>
+                        <td><button class="btn btn-sm btn-primary" id="show-markers-html" >Copy</button></td>
+                    </tr>
+                    <tr class="p-2">
+                        <td class="fw-normal"><span class="fs-6">Markers for ARIA elements (role)</span> </td>
+                        <td><button class="btn btn-sm btn-primary" id="show-markers-aria" >Copy</button></td>
+                    </tr>
+                </table>
+            </div>
+
         </div>
     </main>
     <script>
 
         const alert = document.querySelector("#alert")
-
-       const markElements= `const markElements  = (selectorSTR)=>{
-	const elements = document.querySelectorAll(selectorSTR)
-	let spanLevel = null
-
-	elements.forEach(h=>{
-			spanLevel = document.createElement("span")
-			spanLevel.innerText = h.tagName
-			spanLevel.style.background = "red"
-			spanLevel.style.display = "inline"
-			h.insertAdjacentElement("afterbegin",spanLevel)
-			h.style.outline = "red thin solid"
-		})
-    }`
 
 
         // Functions
@@ -164,18 +168,33 @@ document.addEventListener("contextmenu", (event) => {
         })
 
         document.querySelector("#show-heading-levels").addEventListener("click", () => {
-            navigator.clipboard.writeText(`		// ARIA Headings pending to include
-		const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6")
-		let spanLevel = null
+            navigator.clipboard.writeText(                
+                `		const applyStyle = (elm, color)=>{
+		elm.style.cssText = \'width: fit-content;height: fit-content;padding:10px;border-radius: 5px;background-color: red; color:white;outline: white thin solid;outline-offset: -2px;display:inline;font-size:15px;font-weight:normal;font-family:Arial, Helvetica, sans-serif;text-transform: capitalize;\'
+	}
 
-		headings.forEach(h=>{
-			spanLevel = document.createElement("span")
-			spanLevel.innerText = h.tagName
-			spanLevel.style.background = "red"
-			spanLevel.style.display = "inline"
-			h.insertAdjacentElement("afterbegin",spanLevel)
-			h.style.outline = "red thin solid"
-		})`)
+const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6")
+const ariaHeadings = document.querySelectorAll("[role='heading']")
+let span = null
+
+headings.forEach(elm=>{
+			span = document.createElement("span")
+			span.innerText = elm.tagName
+			applyStyle(span,"red")
+			elm.parentElement.insertAdjacentElement("afterbegin",span)
+			elm.style.outline = "red thin solid"
+			
+		})
+
+ariaHeadings.forEach(elm=>{
+				span = document.createElement("span")
+				span.innerText = 'ARIA '+ elm.getAttribute("role")+' '+ elm.getAttribute("aria-level")
+				applyStyle(span,"red")
+				elm.insertAdjacentElement("afterbegin",span)
+				elm.style.outline = "red thin solid"
+				
+			})
+`)
             console.log("Copied!!!")
             displayAlert()
         })
@@ -228,6 +247,212 @@ document.addEventListener("contextmenu", (event) => {
         displayAlert()
         })
 
+        document.querySelector("#show-markers-html").addEventListener("click", () => {
+        navigator.clipboard.writeText(`
+        const applyStyle = (elm, color)=>{
+		elm.style.cssText = \`
+			width: fit-content;
+			height: fit-content;
+			padding:10px;
+			border-radius: 5px;
+			background-color: red; 
+			color:white;
+			outline: white thin solid;
+			outline-offset: -2px;
+			display:inline;
+			font-size:15px;
+			font-weight:normal
+			font-family:Arial, Helvetica, sans-serif;
+			text-transform: capitalize;
+			\`
+	}
+    const markHTMLElements  = (text)=>{
+
+let tagString = text
+const tagArray = tagString.split(",")
+let selectorArray = []
+let selectorSTR = ""
+
+tagArray.forEach(tag =>{
+    selectorArray.push (tag)
+})
+
+selectorSTR = selectorArray.join(",")
+console.log("Marking: "+selectorSTR.length+" elements")
+console.log(selectorSTR)
+
+const htmlElements = document.querySelectorAll(selectorSTR)
+selectorArray = []
+selectorSTR = ""
+
+let span = null
+
+htmlElements.forEach(elm=>{
+        span = document.createElement("span")
+        span.innerText = elm.tagName
+        applyStyle(span,"red")
+        elm.parentElement.insertAdjacentElement("afterbegin",span)
+        elm.style.outline = "red thin solid"
+        
+    })
+
+}
+
+console.clear()
+
+        `)
+
+        console.log("Copied!!!")
+        displayAlert()
+        })
+
+        document.querySelector("#show-markers-aria").addEventListener("click", () => {
+        navigator.clipboard.writeText(`
+        const applyStyle = (elm, color)=>{
+		elm.style.cssText = \`
+			width: fit-content;
+			height: fit-content;
+			padding:10px;
+			border-radius: 5px;
+			background-color: red; 
+			color:white;
+			outline: white thin solid;
+			outline-offset: -2px;
+			display:inline;
+			font-size:15px;
+			font-weight:normal
+			font-family:Arial, Helvetica, sans-serif;
+			text-transform: capitalize;
+			\`
+	}
+    const markARIAElements  = (text)=>{
+
+let rolesString = text
+const rolesArray = rolesString.split(",")
+let selectorArray = []
+let selectorSTR = ""
+
+rolesArray.forEach(role =>{
+    selectorArray.push ("[role='"+role+"']")
+})
+
+selectorSTR = selectorArray.join(",")
+console.log("Marking: "+selectorSTR.length+" elements")
+
+const ariaElements = document.querySelectorAll(selectorSTR)
+selectorArray = []
+selectorSTR = ""
+
+let span = null
+
+ariaElements.forEach(elm=>{
+        span = document.createElement("span")
+        span.innerText = elm.getAttribute("role")
+        applyStyle(span,"red")
+        elm.insertAdjacentElement("afterbegin",span)
+        elm.style.outline = "red thin solid"
+        
+    })
+    console.clear()
+}
+        `)
+
+        console.log("Copied!!!")
+        displayAlert()
+        })
+
+        document.querySelector("#show-list").addEventListener("click", () => {
+        navigator.clipboard.writeText(`
+        const applyStyle = (elm, color)=>{
+		elm.style.cssText = \`
+			width: fit-content;
+			height: fit-content;
+			padding:10px;
+			border-radius: 5px;
+			background-color: red; 
+			color:white;
+			outline: white thin solid;
+			outline-offset: -2px;
+			display:inline;
+			font-size:15px;
+			font-weight:normal
+			font-family:Arial, Helvetica, sans-serif;
+			text-transform: capitalize;
+			\`
+	}
+    const markARIAElements  = (text)=>{
+
+let rolesString = text
+const rolesArray = rolesString.split(",")
+let selectorArray = []
+let selectorSTR = ""
+
+rolesArray.forEach(role =>{
+    selectorArray.push ("[role='"+role+"']")
+})
+
+selectorSTR = selectorArray.join(",")
+console.log("Marking: "+selectorSTR.length+" elements")
+
+const ariaElements = document.querySelectorAll(selectorSTR)
+selectorArray = []
+selectorSTR = ""
+
+let span = null
+
+ariaElements.forEach(elm=>{
+        span = document.createElement("span")
+        span.innerText = elm.getAttribute("role")
+        applyStyle(span,"red")
+        elm.insertAdjacentElement("afterbegin",span)
+        elm.style.outline = "red thin solid"
+        
+    })
+    console.clear()
+}
+
+const markHTMLElements  = (text)=>{
+
+let tagString = text
+const tagArray = tagString.split(",")
+let selectorArray = []
+let selectorSTR = ""
+
+tagArray.forEach(tag =>{
+    selectorArray.push (tag)
+})
+
+selectorSTR = selectorArray.join(",")
+console.log("Marking: "+selectorSTR.length+" elements")
+console.log(selectorSTR)
+
+const htmlElements = document.querySelectorAll(selectorSTR)
+selectorArray = []
+selectorSTR = ""
+
+let span = null
+
+htmlElements.forEach(elm=>{
+        span = document.createElement("span")
+        span.innerText = elm.tagName
+        applyStyle(span,"red")
+        elm.parentElement.insertAdjacentElement("afterbegin",span)
+        elm.style.outline = "red thin solid"
+        
+    })
+
+}
+
+console.clear()
+markHTMLElements("li,ul,ol")
+markARIAElements("list,listitem") 
+
+
+        `)
+
+        console.log("Copied!!!")
+        displayAlert()
+        })
 
     </script>
 </body>
