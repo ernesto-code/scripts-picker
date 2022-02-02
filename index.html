@@ -34,7 +34,7 @@
                         <td><button class="btn btn-primary" id="color-contrast-css-props">Copy</button></td>
                     </tr>
                     <tr class="p-5">
-                        <td class="fw-normal"><span class="fs-4 " style="color:#aaa">Show Heading levels</span> </td>
+                        <td class="fw-normal"><span class="fs-4 ">Show Heading levels</span> </td>
                         <td><button class="btn btn-primary" id="show-heading-levels" >Copy</button></td>
                     </tr>
                     <tr class="p-5">
@@ -57,6 +57,22 @@
     <script>
 
         const alert = document.querySelector("#alert")
+
+       const markElements= `const markElements  = (selectorSTR)=>{
+	const elements = document.querySelectorAll(selectorSTR)
+	let spanLevel = null
+
+	elements.forEach(h=>{
+			spanLevel = document.createElement("span")
+			spanLevel.innerText = h.tagName
+			spanLevel.style.background = "red"
+			spanLevel.style.display = "inline"
+			h.insertAdjacentElement("afterbegin",spanLevel)
+			h.style.outline = "red thin solid"
+		})
+    }`
+
+
         // Functions
         const displayAlert = () => {
             alert.style.display = "block"
