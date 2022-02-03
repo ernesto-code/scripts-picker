@@ -12,7 +12,6 @@
 </head>
 
 <body>
-
     <div id="alert" class="alert alert-success w-25 shadow-lg" role="alert"
         style="display:none; position: fixed;top:40%;left:35%">
         <i class="fa fa-exclamation-triangle fa-lg" aria-hidden="true"></i>Script copied to clipboard !
@@ -51,6 +50,14 @@
             <div class="col-5 pt-3">
                 <h3>DOM Elements</h3>
                 <table class="table table-hover border table-striped">
+                    <tr class="p-2">
+                        <td class="fw-normal"><span class="fs-6">Markers for HTML elements (tag name)</span> </td>
+                        <td><button class="btn btn-sm btn-primary" id="show-markers-html" >Copy</button></td>
+                    </tr>
+                    <tr class="p-2">
+                        <td class="fw-normal"><span class="fs-6">Markers for ARIA elements (role)</span> </td>
+                        <td><button class="btn btn-sm btn-primary" id="show-markers-aria" >Copy</button></td>
+                    </tr>
                      <tr class="p-2">
                         <td class="fw-normal"><span class="fs-6">Show Heading levels</span></td>
                         <td><button class="btn btn-sm btn-primary" id="show-heading-levels" >Copy</button></td>
@@ -60,13 +67,9 @@
                         <td><button class="btn btn-sm btn-primary" id="show-list" >Copy</button></td>
                     </tr>
                     <tr class="p-2">
-                        <td class="fw-normal"><span class="fs-6">Markers for HTML elements (tag name)</span> </td>
-                        <td><button class="btn btn-sm btn-primary" id="show-markers-html" >Copy</button></td>
-                    </tr>
-                    <tr class="p-2">
-                        <td class="fw-normal"><span class="fs-6">Markers for ARIA elements (role)</span> </td>
-                        <td><button class="btn btn-sm btn-primary" id="show-markers-aria" >Copy</button></td>
-                    </tr>
+                        <td class="fw-normal"><span class="fs-6">Show Live regions (role status included)</span> </td>
+                        <td><button class="btn btn-sm btn-primary" id="show-live-regions" >Copy</button></td>
+                    </tr>                   
                 </table>
             </div>
 
@@ -448,6 +451,44 @@ markHTMLElements("li,ul,ol")
 markARIAElements("list,listitem") 
 
 
+        `)
+
+        console.log("Copied!!!")
+        displayAlert()
+        })
+
+        document.querySelector("#show-live-regions").addEventListener("click", () => {
+        navigator.clipboard.writeText(`
+        const applyStyle = (elm, color)=>{
+		elm.style.cssText = \`
+			width: fit-content;
+			height: fit-content;
+			padding:10px;
+			border-radius: 5px;
+			background-color: red; 
+			color:white;
+			outline: white thin solid;
+			outline-offset: -2px;
+			display:inline;
+			font-size:15px;
+			font-weight:normal
+			font-family:Arial, Helvetica, sans-serif;
+			text-transform: capitalize;
+			\`
+	}
+
+	const htmlElements = document.querySelectorAll("[aria-live='polite'],[aria-live='assertive'],[role='status']")
+ 	let span = null
+
+	htmlElements.forEach(elm=>{
+			span = document.createElement("span")
+			span.innerText = "Live"
+			applyStyle(span,"red")
+			elm.parentElement.insertAdjacentElement("afterbegin",span)
+			elm.style.outline = "red thin solid"
+			
+		})
+		
         `)
 
         console.log("Copied!!!")
