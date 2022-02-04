@@ -59,17 +59,21 @@
                         <td><button class="btn btn-sm btn-primary" id="show-markers-aria" >Copy</button></td>
                     </tr>
                      <tr class="p-2">
-                        <td class="fw-normal"><span class="fs-6">Show Heading levels</span></td>
+                        <td class="fw-normal"><span class="fs-6">Heading levels</span></td>
                         <td><button class="btn btn-sm btn-primary" id="show-heading-levels" >Copy</button></td>
                     </tr>
                     <tr class="p-2">
-                        <td class="fw-normal"><span class="fs-6">Show List and Listitems</span> </td>
+                        <td class="fw-normal"><span class="fs-6">List and Listitems</span> </td>
                         <td><button class="btn btn-sm btn-primary" id="show-list" >Copy</button></td>
                     </tr>
                     <tr class="p-2">
-                        <td class="fw-normal"><span class="fs-6">Show Live regions (role status included)</span> </td>
+                        <td class="fw-normal"><span class="fs-6">Live regions (role status included)</span> </td>
                         <td><button class="btn btn-sm btn-primary" id="show-live-regions" >Copy</button></td>
-                    </tr>                   
+                    </tr>     
+                    <tr class="p-2">
+                        <td class="fw-normal"><span class="fs-6">Page title</span> </td>
+                        <td><button class="btn btn-sm btn-primary" id="show-page-title" >Copy</button></td>
+                    </tr>                
                 </table>
             </div>
 
@@ -494,6 +498,41 @@ markARIAElements("list,listitem")
         console.log("Copied!!!")
         displayAlert()
         })
+
+        document.querySelector("#show-page-title").addEventListener("click", () => {
+        navigator.clipboard.writeText(`
+        const applyStyle = (elm)=>{
+		elm.style.cssText = \`
+			width: fit-content;
+			height: fit-content;
+			position:fixed;
+			top:20px;
+			left:20px;
+			padding:10px;
+			border-radius: 5px;
+			background-color: #fdab3d; 
+			color:white;
+			outline: white thin solid;
+			outline-offset: -2px;
+			display:inline;
+			font-size:20px;
+			font-weight:normal
+			font-family:Arial, Helvetica, sans-serif;
+			z-index: 100000;
+			\`
+	}
+
+const titleElement = document.getElementsByTagName("title")[0]
+let span = document.createElement("span")
+span.innerText = "Title: " + titleElement.innerHTML
+applyStyle(span)
+document.getElementsByTagName("body")[0].insertAdjacentElement("afterbegin",span)	
+        `)
+
+        console.log("Copied!!!")
+        displayAlert()
+        })
+
 
     </script>
 </body>
