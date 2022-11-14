@@ -130,7 +130,7 @@ newItem.style.outline = "rgb(6, 107, 177) 1px solid"
 
 // Layout set and adding to DOM
 newItem.innerHTML = 
-    '
+    \`
     <select id="select-component">
         <option disabled selected>Select a component</option>
         <option value='Smart'>Smart Assistant</option>
@@ -141,7 +141,7 @@ newItem.innerHTML =
     <button id='clear-button'>Clear</button>
     <label style="display:inline;margin-left:3em;">
     <input type="checkbox" id="bold-text-checkbox" style="display:inline;"> Bolded titles</label>
-    '
+    \`
 targetElement.insertAdjacentElement("afterend",newItem)
 
 
